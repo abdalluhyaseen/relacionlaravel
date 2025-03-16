@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\coache;
-use App\Http\Controllers\Controller;
+use App\Models\Coache;
 use Illuminate\Http\Request;
 
 class CoacheController extends Controller
@@ -13,9 +12,8 @@ class CoacheController extends Controller
      */
     public function index()
     {
-     $coaches = Coache::with('students')->get();
-return view('index', compact('coaches'));
-
+        $coaches = Coache::all();
+        return view('coaches.index', compact('coaches'));
     }
 
     /**
@@ -23,7 +21,7 @@ return view('index', compact('coaches'));
      */
     public function create()
     {
-        //
+        return view('coaches.create');
     }
 
     /**
@@ -31,43 +29,52 @@ return view('index', compact('coaches'));
      */
     public function store(Request $request)
     {
-        //
+        Coache::create($request->all());
+        return redirect()->route('coaches.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show( $id)
+    public function show($id)
     {
-          {
-        // تحميل الطلاب المرتبطين بـ Coach
-        $coach = coache::with('students')->findOrFail($id);
-
-        return view('show', compact('coach'));
-    }
+        $coach = Coache::findOrFail($id);
+        return view('coaches.show', compact('coach'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(coache $coache)
+    public function edit($id)
     {
-        //
+        $coach = Coache::findOrFail($id);
+        return view('coaches.edit', compact('coach'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, coache $coache)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:coaches,email,' . $id,
+        ]);
+
+        $coach = Coache::findOrFail($id);
+        $coach->update($request->all());
+
+        return redirect()->route('coaches.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(coache $coache)
+    public function destroy($id)
     {
-        //
+        $coach = Coache::findOrFail($id);
+        $coach->delete();
+
+        return redirect()->route('coaches.index');
     }
 }

@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-             $table->string('name');
-             $table->string('age');
-             $table->foreignId('coach_id')->constrained('coaches')->cascadeOnDelete();
-
+            $table->string('name');
+            $table->unsignedBigInteger('coach_id');
+            $table->foreign('coach_id')->references('id')->on('coaches');
             $table->timestamps();
         });
     }

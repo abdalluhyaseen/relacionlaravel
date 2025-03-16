@@ -17,27 +17,24 @@
     <thead style="background-color: #f8f9fa;">
         <tr>
             <th style="padding: 10px; border: 1px solid #ddd; color: #333;">#</th>
+            <th style="padding: 10px; border: 1px solid #ddd; color: #333;">Name</th>
             <th style="padding: 10px; border: 1px solid #ddd; color: #333;">coaches</th>
-            <th style="padding: 10px; border: 1px solid #ddd; color: #333;">student</th>
-            <th style="padding: 10px; border: 1px solid #ddd; color: #333;">Age</th>
         </tr>
     </thead>
     <tbody>
-         @foreach($coaches as $student)
+         @foreach($students as $student)
             <tr>
                 <td style="padding: 10px; border: 1px solid #ddd;">{{ $student->id }}</td>
                 <td style="padding: 10px; border: 1px solid #ddd;">{{ $student->name }}</td>
-                <td style="padding: 10px; border: 1px solid #ddd;">  @foreach($student->students as $student)
-                {{ $student->name }}
-            <td style="padding: 10px; border: 1px solid #ddd;">
-                {{ $student->age }}
-            </td>
-        @endforeach</td>
-            </tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ $student->coach->name }}</td>
         @endforeach
     </tbody>
 </table>
-
+<div style="display: flex; justify-content: space-between; align-items: center; margin: 20px auto; width: 80%;">
+    <button style="padding: 10px 20px; font-size: 14px; color: #fff; background-color: #28a745; border: none; border-radius: 5px; cursor: pointer; text-transform: uppercase; transition: background-color 0.3s;">
+        <a href="{{ route('mage.create') }}" style="text-decoration: none; color: #fff;">Add New</a>
+    </button>
+</div>
 
 </body>
 </html>

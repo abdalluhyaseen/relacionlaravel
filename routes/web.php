@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CoacheController;
+use App\Http\Controllers\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +21,8 @@ Route::get('/', function () {
 
 
 
-Route::resource('mage', CoacheController::class);
+Route::resource('mage', StudentController::class);
+
+
+Route::resource('coaches', coacheController::class);
+
